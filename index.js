@@ -14,6 +14,6 @@ connectToMongoose();
 app.use('/auth',authRoutes.router);
 app.use('/transaction',transactionRoutes.router);
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Expense Tracker listening at http://localhost:${port}`)
 })

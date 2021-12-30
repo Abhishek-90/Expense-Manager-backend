@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
-const dbUri = "mongodb+srv://expensemanager:expensemanager@cluster0.jjc6p.mongodb.net/expensemanager?retryWrites=true&w=majority";
+const dbUri = "mongodb+srv://expensemanager:expensemanager@cluster0.ifb0d.mongodb.net/expensemanager?retryWrites=true&w=majority";
 
 const connectToMongoose = () => {
     mongoose.connect(dbUri, ()=>{

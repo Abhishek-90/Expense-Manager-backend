@@ -2,9 +2,9 @@ import express from "express";
 import { body, validationResult } from "express-validator";
 const router = express.Router();
 import bcrypt from 'bcrypt';
-import User from '../models/user';
-const jwttoken = require('jsonwebtoken');
-const dotenv = require('dotenv');
+import user from '../models/user.js';
+import jsonwebtoken from 'jsonwebtoken';
+import dotenv from 'dotenv';
 dotenv.config();
 const secret = process.env.Secret_Key;
 
@@ -21,11 +21,12 @@ router.post('/signup',
     try{
         if(!errors.isEmpty()){
             //If there are errors in the data sent, don't proceed further.
+            console.log("Error in input.")
             return res.status(400).send({errors});
         }
         
         //Checking if Email address entered by user while sign up is laready associated with another Profile.
-        const exists = await User.findOne({
+        const exists = await user.findOne({
             email: req.body.email
         });
 
@@ -38,17 +39,18 @@ router.post('/signup',
         const salt = await bcrypt.genSalt(10);
         const secPass = await bcrypt.hash(req.body.password, salt);
 
-        const response = await User.create({
+        const response = await user.create({
             name:req.body.name,
             email: req.body.email,
             password: secPass
         });
 
         //Generating auth token to be sent to user.
-        const authToken = jwttoken.sign({email:req.body.email},secret);
+        const authToken = jsonwebtoken.sign({email:req.body.email},secret);
         return res.status(200).send({'authToken': authToken, 'status':'success'});
     }
     catch(e){
+        console.log("Error in Catch.")
         return res.status(400).json({error:e});
     }
 })
@@ -67,7 +69,7 @@ router.post('/login',
         return res.status(400).send({errors, 'status' : 'fail'});
     }
 
-    const response = await User.findOne({
+    const response = await user.findOne({
         email: req.body.email,
     });
 
@@ -77,7 +79,7 @@ router.post('/login',
     const passwordValidation = bcrypt.compare(req.body.password, response.password);
 
     if(passwordValidation){
-        const authToken = jwttoken.sign({email:req.body.email},secret);
+        const authToken = jsonwebtoken.sign({email:req.body.email},secret);
         return res.send({'authToken':authToken, 'status' :'success'});
 
     }else{
@@ -85,4 +87,4 @@ router.post('/login',
     }
 })
 
-module.exports = router;
+export { router };

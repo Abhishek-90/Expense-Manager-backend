@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const {Schema}  = mongoose;
-const user = require('./user');
+import user from './user.js';
 
 const transactionSchema = new Schema({
     email:{
         type: String,
-        ref:user
+        ref: user
     },
     date:{
         type: Date,
@@ -29,4 +29,4 @@ const transactionSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('transaction',transactionSchema)
+export default mongoose.model("transaction", transactionSchema);

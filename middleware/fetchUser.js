@@ -1,9 +1,9 @@
-const jwttoken = require('jsonwebtoken');
-const dotenv = require('dotenv');
+import jsonwebtoken from 'jsonwebtoken';
+import dotenv from 'dotenv';
 dotenv.config();
 const secret = 'expensemanager';
 
-const fetchuser = (req,res,next) => {
+const fetchUser = (req,res,next) => {
 
     const token = req.header('authToken');
     if(!token){
@@ -19,4 +19,4 @@ const fetchuser = (req,res,next) => {
     }
 }
 
-module.exports = fetchuser;
+export {fetchUser};

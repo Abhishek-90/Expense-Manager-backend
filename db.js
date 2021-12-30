@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-// const dotenv = require('dotenv');
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const dbUri = "mongodb+srv://expensemanager:expensemanager@cluster0.ifb0d.mongodb.net/expensemanager?retryWrites=true&w=majority";
+const dbUri = "mongodb+srv://expensemanager:expensemanager@cluster0.ifb0d.mongodb.net/ExpenseManager?retryWrites=true&w=majority";
+// const dbUri = "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
 
 const connectToMongoose = () => {
     mongoose.connect(dbUri, ()=>{
@@ -11,4 +12,4 @@ const connectToMongoose = () => {
     })
 }
 
-module.exports = {connectToMongoose};
+export { connectToMongoose };

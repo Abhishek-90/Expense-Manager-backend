@@ -1,6 +1,7 @@
-const express = require('express')
+import express from "express";
 const cors = require('cors');
-const {connectToMongoose} = require('./db');
+import {connectToMongoose} from './db';
+
 const app = express()
 const port = 9000
 

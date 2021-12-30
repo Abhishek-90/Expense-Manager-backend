@@ -1,6 +1,8 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
+import mongoose from "mongoose";
+
+// const dotenv = require('dotenv');
+// dotenv.config();
+
 const dbUri = "mongodb+srv://expensemanager:expensemanager@cluster0.ifb0d.mongodb.net/expensemanager?retryWrites=true&w=majority";
 
 const connectToMongoose = () => {

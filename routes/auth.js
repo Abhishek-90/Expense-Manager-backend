@@ -1,8 +1,8 @@
-const express = require('express');
-const { body, validationResult } = require('express-validator');
+import express from "express";
+import { body, validationResult } from "express-validator";
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const User = require('../models/user');
+import bcrypt from 'bcrypt';
+import User from '../models/user';
 const jwttoken = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();

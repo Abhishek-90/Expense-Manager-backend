@@ -11,7 +11,7 @@ const fetchUser = (req,res,next) => {
     }
 
     try {
-        const data = jwttoken.verify(token,secret);
+        const data = jsonwebtoken.verify(token,secret);
         req.email = data.email;
         next();        
     } catch (error) {

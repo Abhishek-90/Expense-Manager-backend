@@ -9,7 +9,6 @@ const port = process.env.PORT || 5000
 
 app.use(express.json());
 app.use(cors({
-  'Access-Control-Allow-Origin': '*',
   origin:'https://expense-manager-f.herokuapp.com/'
 }));
 

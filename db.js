@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-
+// import mongoose from "mongoose";
+import { MongoClient } from 'mongodb'
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -7,7 +7,7 @@ const dbUri = "mongodb+srv://expensemanager:expensemanager@cluster0.ifb0d.mongod
 
 const connectToMongoose = () => {
     try {
-        mongoose.connect(
+        MongoClient.connect(
             dbUri,
             { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
             () => {

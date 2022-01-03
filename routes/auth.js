@@ -21,7 +21,6 @@ router.post('/signup',
     try{
         if(!errors.isEmpty()){
             //If there are errors in the data sent, don't proceed further.
-            console.log("Error in input.")
             return res.status(400).send({errors, "Catch":"catch"});
         }
         
@@ -50,8 +49,6 @@ router.post('/signup',
         return res.status(200).send({'authToken': authToken, 'status':'success'});
     }
     catch(e){
-        console.log("Error in Catch.");
-        console.log(e);
         return res.status(400).json({error:e, "catch":"catch"});
     }
 })

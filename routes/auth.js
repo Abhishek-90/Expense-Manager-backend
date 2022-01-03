@@ -22,7 +22,7 @@ router.post('/signup',
         if(!errors.isEmpty()){
             //If there are errors in the data sent, don't proceed further.
             console.log("Error in input.")
-            return res.status(400).send({errors});
+            return res.status(400).send({errors, "Catch":"catch"});
         }
         
         //Checking if Email address entered by user while sign up is laready associated with another Profile.
@@ -50,8 +50,9 @@ router.post('/signup',
         return res.status(200).send({'authToken': authToken, 'status':'success'});
     }
     catch(e){
-        console.log("Error in Catch.")
-        return res.status(400).json({error:e});
+        console.log("Error in Catch.");
+        console.log(e);
+        return res.status(400).json({error:e, "catch":"catch"});
     }
 })
 

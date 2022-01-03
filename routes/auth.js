@@ -25,9 +25,11 @@ router.post('/signup',
         }
         
         //Checking if Email address entered by user while sign up is laready associated with another Profile.
-        const exists = await user.findOne({
+        console.log("Before Find");
+        const exists = await user.find({
             email: req.body.email
         });
+        console.log("After Find");
 
         if(exists){
             //Email address already associated with another ID.

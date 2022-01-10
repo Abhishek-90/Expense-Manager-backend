@@ -4,9 +4,15 @@ import { connectToMongoose } from './db.js';
 import * as authRoutes from './routes/auth.js';
 import * as transactionRoutes from './routes/transaction.js'
 
-const app = express()
-app.options(cors());
+const app = express();
+app.use(cors({
+  "origin" : "*",
+  "methods": ["GET", "POST", "DELETE", "PUT"],
+  "maxAge": "3600"
+}));
+
 app.use(express.json());
+
 connectToMongoose();
 
 const port = process.env.PORT || 5000

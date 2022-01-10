@@ -1,25 +1,27 @@
 import express from "express";
-// import cors from 'cors';
+import cors from 'cors';
 import { connectToMongoose } from './db.js';
 import * as authRoutes from './routes/auth.js';
 import * as transactionRoutes from './routes/transaction.js'
 
 const app = express();
-// app.use(cors({
-//   "origin" : "*",
-//   "methods": ["GET", "POST", "DELETE", "PUT"],
-//   "maxAge": "3600"
-// }));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+app.use(cors({
+  "allowedHeaders": "*",
+  "origin": "*",
+  "maxAge" : "3600",
+  "methods": "*"
+}))
 
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  res.setHeader('Access-Control-Allow-Headers', '*');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 
-  next();
-})
+//   res.setHeader('Access-Control-Allow-Headers', '*');
+
+//   next();
+// })
 
 app.use(express.json());
 

@@ -23,6 +23,8 @@ app.use(cors({
 //   next();
 // })
 
+console.log("This is Backend.");
+
 app.use(express.json());
 
 connectToMongoose();

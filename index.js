@@ -5,7 +5,7 @@ import * as authRoutes from './routes/auth.js';
 import * as transactionRoutes from './routes/transaction.js'
 
 const app = express()
-app.use(cors());
+app.options(cors());
 app.use(express.json());
 connectToMongoose();
 

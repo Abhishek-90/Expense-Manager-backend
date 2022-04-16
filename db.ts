@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const dbUri = process.env.Db_Uri;
+const dbUri:string = process.env.Db_Uri;
 
 const connectToMongoose = () => {
     try {

@@ -4,9 +4,7 @@ const router = express.Router();
 import bcrypt from 'bcrypt';
 import user from '../models/user.js';
 import jsonwebtoken from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
-const secret = process.env.Secret_Key;
+import { encryptionKey } from "../Constants/constants.js";
 
 //ROUTE 1: API Endpoint for new User Registration. No Login Required.
 router.post('/signup',
@@ -14,7 +12,7 @@ router.post('/signup',
         body('email').isEmail().withMessage("Enter Valid Email Address."),
         body('password').isLength({min: 8}).withMessage("Minimum 8 characters Password")
     ]
-,async (req,res)=>{
+,async (req:express.Request,res:express.Response)=>{
     // Storing errors in input data inside errors
     const errors = validationResult(req);
 
@@ -47,7 +45,7 @@ router.post('/signup',
         });
 
         //Generating auth token to be sent to user.
-        const authToken = jsonwebtoken.sign({email:req.body.email},secret);
+        const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
         return res.status(200).send({'authToken': authToken, 'status':'success'});
     }
     catch(e){
@@ -60,7 +58,7 @@ router.post('/login',
     [
         body('email').isEmail().withMessage("Enter Valid Email Address.")
     ]
-,async (req,res)=>{
+,async (req:express.Request,res:express.Response)=>{
     // Storing errors in input data inside errors
     const errors = validationResult(req);
 
@@ -76,10 +74,10 @@ router.post('/login',
     if(response === null)
         return res.status(400).send({"Message":"Invalid Credentials", 'status': 'fail'});
 
-    const passwordValidation = bcrypt.compare(req.body.password, response.password);
+    const passwordValidation:boolean = await bcrypt.compare(req.body.password, response.password);
 
     if(passwordValidation){
-        const authToken = jsonwebtoken.sign({email:req.body.email},secret);
+        const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
         return res.send({'authToken':authToken, 'status' :'success'});
 
     }else{

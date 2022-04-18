@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import user from '../models/user.js';
 import jsonwebtoken from 'jsonwebtoken';
 import { encryptionKey } from "../Constants/constants.js";
+import * as status from '../Constants/Status'
 
 //ROUTE 1: API Endpoint for new User Registration. No Login Required.
 router.post('/signup',
@@ -78,10 +79,10 @@ router.post('/login',
 
     if(passwordValidation){
         const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
-        return res.send({'authToken':authToken, 'status' :'success'});
+        return res.status(status.OK).json({'authToken':authToken, 'status' :'success'});
 
     }else{
-        return res.status(404).json({Message: "Invalid Credentials",status:'fail'});
+        return res.status(status.INVALID).json({Message: "Invalid Credentials",status:'fail'});
     }
 })
 

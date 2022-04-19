@@ -1,8 +1,8 @@
 import express from "express";
 import cors from 'cors';
-import { connectToMongoose } from './db.js';
-import * as authRoutes from './Controller/auth.js';
-import * as transactionRoutes from './Controller/transaction.js'
+import { connectToMongoose } from './db';
+import * as authRoutes from './Controller/auth';
+import * as transactionRoutes from './Controller/transaction'
 
 const app = express();
 

@@ -1,10 +1,10 @@
-import express from "express";
-import { body, validationResult } from "express-validator";
-const router = express.Router();
-import bcrypt from 'bcrypt';
-import user from '../models/user.js';
-import jsonwebtoken from 'jsonwebtoken';
-import { encryptionKey } from "../Constants/constants.js";
+import express from "express"
+import { body, validationResult } from "express-validator"
+const router = express.Router()
+import bcrypt from 'bcrypt'
+import user from '../models/user'
+import jsonwebtoken from 'jsonwebtoken'
+import { encryptionKey } from "../Constants/constants"
 import * as status from '../Constants/Status'
 
 //ROUTE 1: API Endpoint for new User Registration. No Login Required.
@@ -20,16 +20,14 @@ router.post('/signup',
     try{
         if(!errors.isEmpty()){
             //If there are errors in the data sent, don't proceed further.
-            return res.status(400).send({errors, "Catch":"catch"});
+            return res.status(status.BADREQUEST).send({errors});
         }
         
         //Checking if Email address entered by user while sign up is laready associated with another Profile.
-        console.log("Before Find");
         const exists = await user.find({
             email: req.body.email
         });
-        console.log("After Find");
-
+        console.log(exists)
         if(exists){
             //Email address already associated with another ID.
             return res.status(400).json({"Message":"User Id Already Taken.", 'status':'fail'});

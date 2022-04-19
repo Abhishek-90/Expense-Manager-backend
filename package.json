@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Your Online Personal Expense Manager. Track your personal expense and have access to them from anywhere at anytime.",
   "main": "index.ts",
-  "type": "module",
   "scripts": {
     "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,6 +1,6 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-import {fetchUser} from '../middleware/fetchUser.js';
+import {fetchUser} from '../middleware/fetchUser';
 const router = express.Router();
 import transaction from '../models/transactionModel.js';
 
@@ -10,7 +10,7 @@ router.post('/addtransaction',
 ,async (req,res)=>{
     try{
         const response = await transaction.create({
-            email:req.email,
+            email:req.body.email,
             type:req.body.type,
             amount: req.body.amount,
             description: req.body.description,
@@ -33,7 +33,7 @@ router.get('/statement',
 ,async (req,res)=>{
     try{
         const statement = await transaction.find({
-            email:req.email,
+            email:req.body.email,
         });
         
         return res.status(200).send({'statement':statement, status:'success'});
@@ -49,7 +49,7 @@ router.delete('/remove',
 ,async (req,res)=>{
     try{
         
-        if(req.email !== null){
+        if(req.body.email !== null){
             const response = await transaction.findByIdAndRemove(req.body.id);
             return res.status(200).send({status:'success'});
         }
@@ -73,7 +73,7 @@ router.put('/update',
         if(!exists)
             return res.send(400).send({Message: 'Transaction Does Not Exists', status: 'success'});
         
-        if(req.email !== null){
+        if(req.body.email !== null){
             const response = await transaction.findByIdAndUpdate(req.body.id ,
                 {
                     type: req.body.type,

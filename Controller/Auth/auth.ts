@@ -81,7 +81,7 @@ router.post('/login',
         return res.send(status.OK).json({'authToken':authToken, 'status' :'success'});
 
     }else{
-        return res.send(status.INVALID).json({Message: "Invalid Credentials",status:'fail'});
+        return res.send(status.NOTFOUND).json({Message: "Invalid Credentials",status:'fail'});
     }
 })
 

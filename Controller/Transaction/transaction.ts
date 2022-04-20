@@ -7,12 +7,13 @@ import * as service from './services';
 
 //ROUTE 1: API Enpoint to add about the transactions the User Makes. Login Required.
 router.post('/addtransaction',
-fetchUser(req,res),
-service.addTransaction(req,res)
+fetchUser,
+service.addTransaction
 )
 
 //ROUTE 2: API Enpoint to get transaction statement of the user. Login Required.
-router.get('/statement'
+router.get('/statement',
+fetchUser
 ,async (req,res)=>{
     try{
         const statement = await transaction.find({
@@ -27,7 +28,8 @@ router.get('/statement'
 })
 
 //ROUTE 3: API Enpoint to Delete a transaction of the user. Login Required.
-router.delete('/remove'
+router.delete('/remove',
+fetchUser
 ,async (req,res)=>{
     try{
         
@@ -45,7 +47,8 @@ router.delete('/remove'
 })
 
 //ROUTE 4: API Enpoint to Update transaction information of the user. Login Required.
-router.put('/update'
+router.put('/update',
+fetchUser
 ,async (req,res)=>{
     try{
 

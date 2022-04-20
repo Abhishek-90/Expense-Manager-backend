@@ -16,6 +16,6 @@ export const addTransaction =  async (req:typeof request,res:typeof response)=>{
       }
   }
   catch(error){
-      return res.status(400).json({error});
+      return res.send(400).json({error});
   }
 }

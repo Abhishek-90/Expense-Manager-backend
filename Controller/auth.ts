@@ -22,16 +22,15 @@ router.post('/signup',
             //If there are errors in the data sent, don't proceed further.
             return res.status(status.BADREQUEST).send({errors});
         }
-        console.log("Inside")
         //Checking if Email address entered by user while sign up is laready associated with another Profile.
-        // const exists = await user.find({
-        //     email: req.body.email
-        // });
-        // console.log(exists)
-        // if(exists){
-        //     //Email address already associated with another ID.
-        //     return res.status(400).json({"Message":"User Id Already Taken.", 'status':'fail'});
-        // }
+        const exists = await user.find({
+            email: req.body.email
+        });
+
+        if(exists.length !== 0){
+            //Email address already associated with another ID.
+            return res.status(status.BADREQUEST).json({"Message":"User Id Already Taken.", 'status':'fail'});
+        }
         
         //Encrypting Password before storing it into database
         const salt = await bcrypt.genSalt(10);
@@ -41,16 +40,16 @@ router.post('/signup',
             name:req.body.name,
             email: req.body.email,
             password: secPass
-        });
+        }).then().catch((e) => console.log(e));
 
         console.log("Got Response")
 
         //Generating auth token to be sent to user.
         const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
-        return res.status(status.OK).send({'authToken': authToken, 'status':'success'});
+        return res.status(status.CREATED).send({authToken});
     }
     catch(e){
-        return res.status(status.BADREQUEST).json({error:e, "catch":"catch"});
+        return res.status(status.BADREQUEST).json({error:e});
     }
 })
 
@@ -65,7 +64,7 @@ router.post('/login',
 
     if(!errors.isEmpty()){
         //Email address already associated with another ID. 
-        return res.status(400).send({errors, 'status' : 'fail'});
+        return res.status(status.BADREQUEST).send({errors});
     }
 
     const response = await user.findOne({
@@ -73,16 +72,16 @@ router.post('/login',
     });
 
     if(response === null)
-        return res.status(400).send({"Message":"Invalid Credentials", 'status': 'fail'});
+        return res.send(status.BADREQUEST).json({"Message":"Invalid Credentials"});
 
     const passwordValidation:boolean = await bcrypt.compare(req.body.password, response.password);
 
     if(passwordValidation){
         const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
-        return res.status(status.OK).json({'authToken':authToken, 'status' :'success'});
+        return res.send(status.OK).json({'authToken':authToken, 'status' :'success'});
 
     }else{
-        return res.status(status.INVALID).json({Message: "Invalid Credentials",status:'fail'});
+        return res.send(status.INVALID).json({Message: "Invalid Credentials",status:'fail'});
     }
 })
 

@@ -3,19 +3,6 @@ import { databaseURL } from "./Constants/constants"
 
 const dbUri:string = databaseURL
 
-const connectToMongoose = async () => {
-    try {
-        await mongoose.connect(
-            dbUri,
-            { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true } as ConnectOptions,
-            () => {
-              console.log('Connected to MongoDB');
-            }
-        );
-    } catch (error) {
-        console.log(error);
-    }
-    
+export const connectToMongoose = async () => {
+    await mongoose.connect(dbUri).then(() => console.log("Expense Manager Connected to MongoDB")).catch((e) => {console.log(e)})
 }
-
-export { connectToMongoose };

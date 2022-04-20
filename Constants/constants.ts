@@ -1,3 +1,3 @@
-export const databaseURL:string = "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"
+export const databaseURL:string = "mongodb://0.0.0.0:27017/ExpenseManager"
 
 export const encryptionKey:string = "expensemanager"

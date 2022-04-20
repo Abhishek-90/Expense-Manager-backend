@@ -3,9 +3,9 @@ import { databaseURL } from "./Constants/constants"
 
 const dbUri:string = databaseURL
 
-const connectToMongoose = () => {
+const connectToMongoose = async () => {
     try {
-        mongoose.connect(
+        await mongoose.connect(
             dbUri,
             { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true } as ConnectOptions,
             () => {

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const {Schema}  = mongoose;
-import user from './user.js';
+import user from './user';
 
 const transactionSchema = new Schema({
     email:{

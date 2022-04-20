@@ -2,12 +2,11 @@ import express from 'express';
 import { body, validationResult } from 'express-validator';
 import {fetchUser} from '../middleware/fetchUser';
 const router = express.Router();
-import transaction from '../models/transactionModel.js';
+import transaction from '../models/transactionModel';
 
 //ROUTE 1: API Enpoint to add about the transactions the User Makes. Login Required.
 router.post('/addtransaction',
-    fetchUser
-,async (req,res)=>{
+async (req,res)=>{
     try{
         const response = await transaction.create({
             email:req.body.email,
@@ -28,8 +27,7 @@ router.post('/addtransaction',
 })
 
 //ROUTE 2: API Enpoint to get transaction statement of the user. Login Required.
-router.get('/statement',
-    fetchUser
+router.get('/statement'
 ,async (req,res)=>{
     try{
         const statement = await transaction.find({
@@ -44,8 +42,7 @@ router.get('/statement',
 })
 
 //ROUTE 3: API Enpoint to Delete a transaction of the user. Login Required.
-router.delete('/remove',
-    fetchUser
+router.delete('/remove'
 ,async (req,res)=>{
     try{
         
@@ -63,8 +60,7 @@ router.delete('/remove',
 })
 
 //ROUTE 4: API Enpoint to Update transaction information of the user. Login Required.
-router.put('/update',
-    fetchUser
+router.put('/update'
 ,async (req,res)=>{
     try{
 

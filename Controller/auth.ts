@@ -22,16 +22,16 @@ router.post('/signup',
             //If there are errors in the data sent, don't proceed further.
             return res.status(status.BADREQUEST).send({errors});
         }
-        
+        console.log("Inside")
         //Checking if Email address entered by user while sign up is laready associated with another Profile.
-        const exists = await user.find({
-            email: req.body.email
-        });
-        console.log(exists)
-        if(exists){
-            //Email address already associated with another ID.
-            return res.status(400).json({"Message":"User Id Already Taken.", 'status':'fail'});
-        }
+        // const exists = await user.find({
+        //     email: req.body.email
+        // });
+        // console.log(exists)
+        // if(exists){
+        //     //Email address already associated with another ID.
+        //     return res.status(400).json({"Message":"User Id Already Taken.", 'status':'fail'});
+        // }
         
         //Encrypting Password before storing it into database
         const salt = await bcrypt.genSalt(10);
@@ -43,12 +43,14 @@ router.post('/signup',
             password: secPass
         });
 
+        console.log("Got Response")
+
         //Generating auth token to be sent to user.
         const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
-        return res.status(200).send({'authToken': authToken, 'status':'success'});
+        return res.status(status.OK).send({'authToken': authToken, 'status':'success'});
     }
     catch(e){
-        return res.status(400).json({error:e, "catch":"catch"});
+        return res.status(status.BADREQUEST).json({error:e, "catch":"catch"});
     }
 })
 

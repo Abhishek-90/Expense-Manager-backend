@@ -1,30 +1,15 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
-import {fetchUser} from '../middleware/fetchUser';
+import {fetchUser} from '../../middleware/fetchUser';
 const router = express.Router();
-import transaction from '../models/transactionModel';
+import transaction from '../../models/transactionModel';
+import * as service from './services';
 
 //ROUTE 1: API Enpoint to add about the transactions the User Makes. Login Required.
 router.post('/addtransaction',
-async (req,res)=>{
-    try{
-        const response = await transaction.create({
-            email:req.body.email,
-            type:req.body.type,
-            amount: req.body.amount,
-            description: req.body.description,
-            tag: req.body.tag
-        });
-        // console.log(response);
-
-        if(response !== null){
-            return res.send({status:'success'});
-        }
-    }
-    catch(error){
-        return res.status(400).json({error});
-    }
-})
+fetchUser(req,res),
+service.addTransaction(req,res)
+)
 
 //ROUTE 2: API Enpoint to get transaction statement of the user. Login Required.
 router.get('/statement'

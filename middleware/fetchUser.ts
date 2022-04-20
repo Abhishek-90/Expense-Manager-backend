@@ -1,9 +1,9 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { Router, response, request } from 'express';
+import { Router, response, request, NextFunction } from 'express';
 import { ICustomRequest } from './Interfaces';
 import { encryptionKey } from '../Constants/constants';
 
-const fetchUser = (req:typeof request, res:typeof response,next:Router) => {
+const fetchUser = (req:typeof request, res:typeof response,next:NextFunction) => {
     const token = req.header('authToken') || "token";
     
     if(!token){

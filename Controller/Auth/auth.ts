@@ -2,10 +2,10 @@ import express from "express"
 import { body, validationResult } from "express-validator"
 const router = express.Router()
 import bcrypt from 'bcrypt'
-import user from '../models/user'
+import user from '../../models/user'
 import jsonwebtoken from 'jsonwebtoken'
-import { encryptionKey } from "../Constants/constants"
-import * as status from '../Constants/Status'
+import { encryptionKey } from "../../Constants/constants"
+import * as status from '../../Constants/Status'
 
 //ROUTE 1: API Endpoint for new User Registration. No Login Required.
 router.post('/signup',

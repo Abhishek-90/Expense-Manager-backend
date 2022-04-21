@@ -11,7 +11,7 @@ const fetchUser = (
   const token = req.header("authToken")
 
   if (!token) {
-    return res.sendStatus(status.NOTFOUND)
+    return res.status(status.NOTFOUND).json({'Messgae':'Login required'})
   }
 
   try {
@@ -19,9 +19,7 @@ const fetchUser = (
 		req.body.email = data.email
     next()
   } catch (error:any) {
-		res.setHeader('status',status.BADREQUEST)
-		res.setHeader('error',error)
-		return res
+		return res.status(status.BADREQUEST).json({error})
   }
 }
 

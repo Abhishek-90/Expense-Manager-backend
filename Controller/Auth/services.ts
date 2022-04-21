@@ -13,7 +13,7 @@ export const signup = async (req:express.Request,res:express.Response)=>{
   try{
       if(!errors.isEmpty()){
           //If there are errors in the data sent, don't proceed further.
-          return res.status(status.BADREQUEST).send({errors});
+          return res.status(status.BADREQUEST).json({errors});
       }
       //Checking if Email address entered by user while sign up is laready associated with another Profile.
       const exists = await user.find({
@@ -39,7 +39,7 @@ export const signup = async (req:express.Request,res:express.Response)=>{
 
       //Generating auth token to be sent to user.
       const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
-      return res.status(status.CREATED).send({authToken});
+      return res.status(status.CREATED).json({authToken});
   }
   catch(e){
       return res.status(status.BADREQUEST).json({error:e});
@@ -60,15 +60,15 @@ export const login = async (req:express.Request,res:express.Response)=>{
   });
 
   if(response === null)
-      return res.send(status.BADREQUEST).json({"Message":"Invalid Credentials"});
+      return res.status(status.BADREQUEST).json({"Message":"Invalid Credentials"});
 
   const passwordValidation:boolean = await bcrypt.compare(req.body.password, response.password);
 
   if(passwordValidation){
       const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
-      return res.json({'authToken':authToken, 'status' :'success'});
+      return res.json({'authToken':authToken}).status(status.OK);
 
   }else{
-      return res.send(status.NOTFOUND).json({Message: "Invalid Credentials",status:'fail'});
+      return res.status(status.NOTFOUND).json({Message: "Invalid Credentials",status:'fail'});
   }
 }

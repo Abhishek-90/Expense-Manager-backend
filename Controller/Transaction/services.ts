@@ -1,5 +1,6 @@
-import transaction from '../../models/transactionModel';
-import { response, request } from 'express';
+import transaction from '../../models/transactionModel'
+import { response, request } from 'express'
+import * as status from '../../Constants/Status'
 
 export const addTransaction =  async (req:typeof request,res:typeof response)=>{
   try{
@@ -9,14 +10,14 @@ export const addTransaction =  async (req:typeof request,res:typeof response)=>{
           amount: req.body.amount,
           description: req.body.description,
           tag: req.body.tag
-      });
+      })
 
       if(response !== null){
-          return res.send({status:'success'});
+          return res.status(status.OK).json({'success':'success', 'Message':'Transaction Added Successfully'})
       }
   }
   catch(error){
-      return res.send(400).json({error});
+      return res.status(status.BADREQUEST).json({error})
   }
 }
 
@@ -24,12 +25,12 @@ export const getStatement = async (req:typeof request,res:typeof response)=>{
     try{
         const statement = await transaction.find({
             email:req.body.email,
-        });
+        })
         
-        return res.status(200).send({'statement':statement, status:'success'});
+        return res.status(status.OK).json({'statement':statement, status:'success'})
     }
     catch(error){
-        return res.status(400).json({error});
+        return res.status(status.BADREQUEST).json({error})
     }
 }
 
@@ -37,25 +38,25 @@ export const removeTransaction = async (req:typeof request,res:typeof response)=
     try{
         
         if(req.body.email !== null){
-            const response = await transaction.findByIdAndRemove(req.body.id);
-            return res.status(200).send({status:'success'});
+            const response = await transaction.findByIdAndRemove(req.body.id)
+            return res.status(status.OK).json({status:'success'})
         }
         else{
-            return res.status(404).send({"Message":"Unauthorised Access", status:'fail'});
+            return res.status(status.BADREQUEST).json({"Message":"Unauthorised Access", status:'fail'})
         }
     }
     catch(error){
-        return res.status(400).send({status: 'fail'});
+        return res.status(status.BADREQUEST).json({error})
     }
 }
 
 export const updateTransactionDetails = async (req:typeof request,res:typeof response) =>{
     try{
 
-        const exists = await transaction.findById(req.body.id);
+        const exists = await transaction.findById(req.body.id)
 
         if(!exists)
-            return res.send(400).send({Message: 'Transaction Does Not Exists', status: 'success'});
+            return res.status(status.BADREQUEST).json({Message: 'Transaction Does Not Exists', status: 'success'})
         
         if(req.body.email !== null){
             const response = await transaction.findByIdAndUpdate(req.body.id ,
@@ -65,13 +66,13 @@ export const updateTransactionDetails = async (req:typeof request,res:typeof res
                     amount: req.body.amount,
                     tag: req.body.tag
             })
-            return res.status(200).send({status:'success'});
+            return res.status(status.OK).json({'success':'success','Message':'Transaction updated Successfully'})
         }
         else{
-            return res.status(404).send({"Message":"Unauthorised Access", status: 'fail'});
+            return res.status(status.BADREQUEST).json({"Message":"Unauthorised Access", status: 'fail'})
         }
     }
     catch(error){
-        return res.status(400).json({error});
+        return res.status(status.BADREQUEST).json({error})
     }
 }

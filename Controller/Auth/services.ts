@@ -35,8 +35,6 @@ export const signup = async (req:express.Request,res:express.Response)=>{
           password: secPass
       }).then().catch((e) => console.log(e));
 
-      console.log("Got Response")
-
       //Generating auth token to be sent to user.
       const authToken = jsonwebtoken.sign({email:req.body.email},encryptionKey);
       return res.status(status.CREATED).json({authToken});

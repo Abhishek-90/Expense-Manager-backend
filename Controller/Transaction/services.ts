@@ -8,6 +8,7 @@ export const addTransaction = async (
 ) => {
   try {
     await transaction.create({
+      date: req.body.date,
       email: req.body.email,
       type: req.body.type,
       amount: req.body.amount,

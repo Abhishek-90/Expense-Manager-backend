@@ -8,8 +8,7 @@ const transactionSchema = new Schema({
         ref: user
     },
     date:{
-        type: Date,
-        default: () => Date.now()
+        type: String
     },
     type:{
         type: String,

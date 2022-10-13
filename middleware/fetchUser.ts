@@ -8,8 +8,8 @@ const fetchUser = (
   res: typeof response,
   next: NextFunction
 ) => {
-  const token = req.header("authToken");
-  
+  const token = req.body.authToken;
+
   if (!token) {
     return res.status(status.NOTFOUND).json({ Messgae: "Login required" });
   }
@@ -17,10 +17,9 @@ const fetchUser = (
   try {
     const data = jsonwebtoken.verify(token, encryptionKey) as { email: string };
     req.body.email = data.email;
-    console.log("Before calling next()");
     next();
   } catch (error: any) {
-    return res.status(status.BADREQUEST).json({ error,"PM":"PM" });
+    return res.status(status.BADREQUEST).json({ error });
   }
 };
 

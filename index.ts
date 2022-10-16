@@ -6,7 +6,11 @@ import * as transactionRoutes from './Controller/Transaction/transaction'
 
 const app = express();
 
-app.use(cors())
+app.use(cors({
+  origin:"http://localhost:3000",
+  // allowedHeaders:'Access-Control-Allow-Origin, Access-Control-Allow-Credentials',
+  credentials: true
+}))
 
 app.use(express.json());
 

@@ -6,6 +6,7 @@ export const addTransaction = async (
   req: typeof request,
   res: typeof response
 ) => {
+  console.log("Request Body:\n",req.cookies);
   try {
     await transaction.create({
       date: req.body.date,

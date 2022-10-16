@@ -79,8 +79,8 @@ export const login = async (req: express.Request, res: express.Response) => {
       { email: req.body.email },
       encryptionKey
     );
-    res.setHeader('Access-Control-Allow-Credentials','true');
-    res.setHeader("set-cookie",[`authToken=${authToken}`]);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("set-cookie", [`authToken=${authToken}; path=/`]);
     return res.json({ authToken: authToken }).status(status.OK);
   } else {
     return res

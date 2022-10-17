@@ -80,7 +80,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       encryptionKey
     );
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("set-cookie", [`authToken=${authToken}; path=/`]);
+    res.setHeader("set-cookie", [`authToken=${authToken}; path=/; max-age=${(new Date()).getTime() + 365*24*60*60}`]);
     return res.json({ authToken: authToken }).status(status.OK);
   } else {
     return res

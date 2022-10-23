@@ -15,7 +15,6 @@ export const fetchUser = (
     }
 
     const cookieObject = customCookieParser(req.headers.cookie);
-    console.log(cookieObject["authToken"]);
     const data = jsonwebtoken.verify(cookieObject["authToken"], encryptionKey) as { email: string };
     req.body.email = data.email;
     next();

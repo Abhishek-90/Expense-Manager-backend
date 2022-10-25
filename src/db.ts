@@ -1,5 +1,5 @@
 import mongoose, {ConnectOptions} from "mongoose"
-import { databaseURL } from "./Constants/constants"
+import { databaseURL } from "../Constants/constants"
 
 const dbUri:string = databaseURL
 

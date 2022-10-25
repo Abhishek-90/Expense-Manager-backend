@@ -10,11 +10,17 @@ export const fetchUser = (
 ) => {
   try {
     const cookie = req.headers.cookie;
+    //Checking if received cookie or not
     if (!cookie) {
       return res.status(status.UNAUTHORIZED).json({ Message: "Login required" });
     }
 
     const cookieObject = customCookieParser(req.headers.cookie);
+    //Checking if authToken cookie is present or not
+    if(!cookieObject["authToken"]) {
+      return res.status(status.UNAUTHORIZED).json({ Message: "Login required" });
+    }
+
     const data = jsonwebtoken.verify(cookieObject["authToken"], encryptionKey) as { email: string };
     req.body.email = data.email;
     next();

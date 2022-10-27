@@ -20,4 +20,9 @@ router.post('/login',
     service.login
 )
 
+//ROUTE 3: Logout Endpoint.
+router.get('/logout',
+    service.logout
+)
+
 export { router };

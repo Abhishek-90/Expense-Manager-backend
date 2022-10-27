@@ -88,3 +88,8 @@ export const login = async (req: express.Request, res: express.Response) => {
       .json({ Message: "Invalid Credentials", status: "fail" });
   }
 };
+
+export const logout = (req: express.Request, res: express.Response) => {
+  res.clearCookie("authToken");
+  res.sendStatus(status.OK);
+};

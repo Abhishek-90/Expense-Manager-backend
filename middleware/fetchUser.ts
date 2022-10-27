@@ -2,6 +2,7 @@ import jsonwebtoken from "jsonwebtoken";
 import { response, request, NextFunction } from "express";
 import { encryptionKey } from "../Constants/constants";
 import * as status from "../Constants/Status";
+import * as F from "../Shared/CookieParser";
 
 export const fetchUser = (
   req: typeof request,
@@ -15,7 +16,7 @@ export const fetchUser = (
       return res.status(status.UNAUTHORIZED).json({ Message: "Login required" });
     }
 
-    const cookieObject = customCookieParser(req.headers.cookie);
+    const cookieObject = F.customCookieParser(req.headers.cookie);
     //Checking if authToken cookie is present or not
     if(!cookieObject["authToken"]) {
       return res.status(status.UNAUTHORIZED).json({ Message: "Login required" });
@@ -29,14 +30,4 @@ export const fetchUser = (
   }
 };
 
-const customCookieParser = (cookie:string|undefined):any => {
-  const cookieArray = cookie?.split(";");
-  let cookieObject = {};
-  cookieArray?.forEach(cookie => {
-    const key = cookie.split("=")[0];
-    const value = cookie.split("=")[1];
-    cookieObject = {...cookieObject, [key]:value};
-  })
 
-  return cookieObject;
-}

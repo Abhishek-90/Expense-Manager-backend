@@ -5,6 +5,7 @@ import user from "../../models/user";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import { encryptionKey } from "../../Constants/constants";
+import * as F from "../../Shared/CookieParser";
 
 export const signup = async (req: express.Request, res: express.Response) => {
   // Storing errors in input data inside errors
@@ -97,6 +98,11 @@ export const logout = (req: express.Request, res: express.Response) => {
 };
 
 export const autoLogin = (req: express.Request, res: express.Response) => {
-  const cookies = req;
-  res.sendStatus(status.OK);
+  const cookie = req.headers.cookie;
+  const cookiesObject = F.customCookieParser(cookie);
+  if(cookiesObject["authToken"]) {
+    res.sendStatus(status.OK);
+  } else {
+    res.sendStatus(status.UNAUTHORIZED);
+  }
 };

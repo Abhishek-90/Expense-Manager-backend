@@ -25,4 +25,9 @@ router.get('/logout',
     service.logout
 )
 
+//ROUTE 4: Automatic Login.
+router.get('/autoLogin',
+    service.autoLogin
+)
+
 export { router };

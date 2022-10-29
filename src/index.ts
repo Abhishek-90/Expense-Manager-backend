@@ -19,6 +19,9 @@ connectToMongoose();
 
 const port = 5000;
 
+app.use("/", (req,res)=>{
+  res.json({Message:"Server is working"});
+});
 app.use("/auth", authRoutes.router);
 app.use("/transaction", transactionRoutes.router);
 

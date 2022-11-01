@@ -1,6 +1,6 @@
 import transaction from "../../models/transactionModel"
 import { response, request } from "express"
-import * as status from "../../Constants/Status"
+import * as status from "../../Shared/Constants/Status"
 
 export const addTransaction = async (
   req: typeof request,

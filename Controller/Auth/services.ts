@@ -1,10 +1,10 @@
-import * as status from "../../Constants/Status";
+import * as status from "../../Shared/Constants/Status";
 import express from "express";
 import { validationResult } from "express-validator";
 import user from "../../models/user";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
-import { encryptionKey } from "../../Constants/constants";
+import { encryptionKey } from "../../Shared/Constants/constants";
 import * as F from "../../Shared/CookieParser";
 
 export const signup = async (req: express.Request, res: express.Response) => {

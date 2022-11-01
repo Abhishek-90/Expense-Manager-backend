@@ -2,9 +2,9 @@
   "name": "expense-tracker-backend",
   "version": "1.0.0",
   "description": "Your Online Personal Expense Manager. Track your personal expense and have access to them from anywhere at anytime.",
-  "main": "./src/index.ts",
+  "main": "index.ts",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
+    "start": "nodemon index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Abhishek",
@@ -12,7 +12,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",

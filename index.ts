@@ -8,7 +8,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://animated-dasik-8cb380.netlify.app/"],
+    origin: [
+      "http://localhost:3000",
+      "https://animated-dasik-8cb380.netlify.app/",
+    ],
     credentials: true,
   })
 );
@@ -19,8 +22,8 @@ connectToMongoose();
 
 const port = 5000;
 
-app.use("/", (req,res)=>{
-  res.json({Message:"Server is working"});
+app.use("/", (req, res) => {
+  res.json({ Message: "Server is working" });
 });
 app.use("/auth", authRoutes.router);
 app.use("/transaction", transactionRoutes.router);

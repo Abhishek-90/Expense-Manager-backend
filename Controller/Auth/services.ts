@@ -4,7 +4,7 @@ import { validationResult } from "express-validator";
 import user from "../../models/user";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
-import { encryptionKey } from "../../Shared/Constants/constants";
+import * as V from "../../Shared/Constants/constants";
 import * as F from "../../Shared/CookieParser";
 
 export const signup = async (req: express.Request, res: express.Response) => {
@@ -44,7 +44,7 @@ export const signup = async (req: express.Request, res: express.Response) => {
     //Generating auth token to be sent to user.
     const authToken = jsonwebtoken.sign(
       { email: req.body.email },
-      encryptionKey
+      V.encryptionKey
     );
     return res.status(status.CREATED).json({ authToken });
   } catch (e) {
@@ -78,7 +78,7 @@ export const login = async (req: express.Request, res: express.Response) => {
   if (passwordValidation) {
     const authToken = jsonwebtoken.sign(
       { email: req.body.email },
-      encryptionKey
+      V.encryptionKey
     );
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("set-cookie", [

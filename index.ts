@@ -3,6 +3,7 @@ import cors from "cors";
 import { connectToMongoose } from "./db";
 import * as authRoutes from "./Controller/Auth/auth";
 import * as transactionRoutes from "./Controller/Transaction/transaction";
+import * as V from "./Shared/Constants/constants";
 
 const app = express();
 
@@ -20,14 +21,9 @@ app.use(express.json());
 
 connectToMongoose();
 
-const port = 5000;
-
-app.use("/", (req, res) => {
-  res.json({ Message: "Server is working" });
-});
 app.use("/auth", authRoutes.router);
 app.use("/transaction", transactionRoutes.router);
 
-app.listen(port, () => {
-  console.log(`Expense Tracker listening at http://localhost:${port}`);
+app.listen(V.port, () => {
+  console.log(`Expense Tracker listening at http://localhost:${V.port}`);
 });

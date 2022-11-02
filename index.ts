@@ -20,10 +20,10 @@ app.use(
 app.use(express.json());
 
 connectToMongoose();
-console.log(V.frontendURL);
+
 app.get("/", (req, res) => {
   res.json({Message:"Server is working"});
-})
+});
 
 app.use("/auth", authRoutes.router);
 app.use("/transaction", transactionRoutes.router);

@@ -10,8 +10,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "https://animated-dasik-8cb380.netlify.app/",
+      V.frontendURL
     ],
     credentials: true,
   })

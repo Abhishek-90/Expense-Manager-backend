@@ -21,6 +21,10 @@ app.use(express.json());
 
 connectToMongoose();
 
+app.get("/", (req, res) => {
+  res.json({Message:"Server is working"});
+})
+
 app.use("/auth", authRoutes.router);
 app.use("/transaction", transactionRoutes.router);
 

@@ -1,8 +1,8 @@
 import express from "express"
-const router = express.Router()
 import * as service from './services'
 import { body } from "express-validator"
 
+const router = express.Router()
 //ROUTE 1: API Endpoint for new User Registration. No Login Required.
 router.post('/signup',
     [

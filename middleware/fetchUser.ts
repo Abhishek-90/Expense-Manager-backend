@@ -10,14 +10,14 @@ export const fetchUser = (
   next: NextFunction
 ) => {
   try {
-    const cookies = req.cookies;
+    const cookie = req.headers.cookie;
     //Checking if received cookie or not
-    console.log(cookies);
-    if (!cookies) {
+    console.log(cookie);
+    if (!cookie) {
       return res.status(status.UNAUTHORIZED).json({ Message: "Login required" });
     }
 
-    const cookieObject = F.customCookieParser(req.cookies);
+    const cookieObject = F.customCookieParser(cookie);
     //Checking if authToken cookie is present or not
     if(!cookieObject["authToken"]) {
       return res.status(status.UNAUTHORIZED).json({ Message: "Login required" });

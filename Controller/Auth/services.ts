@@ -86,7 +86,8 @@ export const login = async (req: express.Request, res: express.Response) => {
       path: "/",
       httpOnly: true,
       sameSite: 'none',
-      maxAge: new Date().getTime() + 365 * 24 * 60 * 60
+      maxAge: new Date().getTime() + 365 * 24 * 60 * 60,
+      secure: true
     });
     return res.json({ authToken: authToken }).status(status.OK);
   } else {

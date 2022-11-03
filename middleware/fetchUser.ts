@@ -17,6 +17,7 @@ export const fetchUser = (
     }
 
     const cookieObject = F.customCookieParser(req.headers.cookie);
+    console.log("Cookie Object = \n"+cookieObject);
     //Checking if authToken cookie is present or not
     if(!cookieObject["authToken"]) {
       return res.status(status.UNAUTHORIZED).json({ Message: "Login required" });

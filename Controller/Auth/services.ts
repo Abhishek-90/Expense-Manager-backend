@@ -84,7 +84,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     res.setHeader("set-cookie", [
       `authToken=${authToken}; path=/; max-age=${
         new Date().getTime() + 365 * 24 * 60 * 60
-      }; httpOnly:${false}; sameSite:${'none'}`,
+      }; httpOnly; sameSite:${'none'}; domain=up.railway.app`,
     ]);
     return res.json({ authToken: authToken }).status(status.OK);
   } else {

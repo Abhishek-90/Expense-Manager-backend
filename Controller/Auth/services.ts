@@ -81,11 +81,13 @@ export const login = async (req: express.Request, res: express.Response) => {
       V.encryptionKey
     );
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("set-cookie", [
-      `authToken=${authToken}; path=/; max-age=${
-        new Date().getTime() + 365 * 24 * 60 * 60
-      }; httpOnly; sameSite:${'none'}; domain=up.railway.app`,
-    ]);
+    
+    res.cookie("authToken",authToken, {
+      path: "/",
+      httpOnly: true,
+      sameSite: 'none',
+      maxAge: new Date().getTime() + 365 * 24 * 60 * 60
+    });
     return res.json({ authToken: authToken }).status(status.OK);
   } else {
     return res.status(status.NOTFOUND).json({ Message: "Invalid Credentials" });

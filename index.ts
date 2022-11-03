@@ -13,7 +13,7 @@ app.use(
       V.frontendURL
     ],
     credentials: true,
-    exposedHeaders: ["set-cookie"], 
+    allowedHeaders: ["set-cookie"], 
   })
 );
 
@@ -22,7 +22,6 @@ app.use(express.json());
 connectToMongoose();
 
 app.get("/", (req, res) => {
-  res.cookie("Temp Cookie","Abhishek");
   res.json({Message:"Server is working"});
 });
 

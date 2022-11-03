@@ -13,7 +13,7 @@ app.use(
       V.frontendURL
     ],
     credentials: true,
-    allowedHeaders: ["set-cookie"], 
+    allowedHeaders: ["set-cookie", "Content-Type"], 
   })
 );
 

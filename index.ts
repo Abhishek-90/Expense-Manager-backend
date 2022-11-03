@@ -22,7 +22,8 @@ app.use(express.json());
 connectToMongoose();
 
 app.get("/", (req, res) => {
-  res.json({Message:"Server is working"}).cookie("Temp Cookie","Abhishek");
+  res.cookie("Temp Cookie","Abhishek");
+  res.json({Message:"Server is working"});
 });
 
 app.use("/auth", authRoutes.router);

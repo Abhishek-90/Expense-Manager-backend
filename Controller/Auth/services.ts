@@ -94,7 +94,13 @@ export const login = async (req: express.Request, res: express.Response) => {
 };
 
 export const logout = (req: express.Request, res: express.Response) => {
-  res.clearCookie("authToken");
+  res.clearCookie("authToken", {
+    path: "/",
+    httpOnly: true,
+    sameSite: 'none',
+    maxAge: new Date().getTime() + 365 * 24 * 60 * 60,
+    secure: true
+  });
   res.sendStatus(status.OK);
 };
 

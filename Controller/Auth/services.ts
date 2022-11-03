@@ -80,8 +80,6 @@ export const login = async (req: express.Request, res: express.Response) => {
       { email: req.body.email },
       V.encryptionKey
     );
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    
     res.cookie("authToken",authToken, {
       path: "/",
       httpOnly: true,

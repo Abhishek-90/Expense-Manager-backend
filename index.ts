@@ -9,11 +9,14 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      V.frontendURL
-    ],
+    origin: [V.frontendURL],
     credentials: true,
-    allowedHeaders: ["set-cookie", "Content-Type", "Access-Control-Allow-Origin"], 
+    allowedHeaders: [
+      "set-cookie",
+      "Content-Type",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Credentials",
+    ],
   })
 );
 
@@ -22,7 +25,7 @@ app.use(express.json());
 connectToMongoose();
 
 app.get("/", (req, res) => {
-  res.json({Message:"Server is working"});
+  res.json({ Message: "Server is working" });
 });
 
 app.use("/auth", authRoutes.router);

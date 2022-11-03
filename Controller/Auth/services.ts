@@ -5,7 +5,7 @@ import user from "../../models/user";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 import * as V from "../../Shared/Constants/constants";
-import * as F from "../../Shared/CookieParser";
+import * as F from "../../Shared/middleware/CookieParser";
 
 export const signup = async (req: express.Request, res: express.Response) => {
   // Storing errors in input data inside errors

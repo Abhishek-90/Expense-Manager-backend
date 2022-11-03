@@ -1,8 +1,8 @@
 import jsonwebtoken from "jsonwebtoken";
 import { response, request, NextFunction } from "express";
-import { encryptionKey } from "../Shared/Constants/constants";
-import * as status from "../Shared/Constants/Status";
-import * as F from "../Shared/CookieParser";
+import { encryptionKey } from "../Constants/constants";
+import * as status from "../Constants/Status";
+import * as F from "./CookieParser";
 
 export const fetchUser = (
   req: typeof request,

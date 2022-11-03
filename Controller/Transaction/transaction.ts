@@ -1,5 +1,5 @@
 import express from "express";
-import { fetchUser } from "../../middleware/fetchUser";
+import { fetchUser } from "../../Shared/middleware/fetchUser";
 const router = express.Router();
 import * as service from "./services";
 

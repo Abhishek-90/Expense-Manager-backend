@@ -24,7 +24,7 @@ export const signup = async (req: express.Request, res: express.Response) => {
     if (exists.length !== 0) {
       //Email address already associated with another ID.
       return res
-        .status(status.BADREQUEST)
+        .status(status.EXISTS)
         .json({ Message: "User Id Already Taken.", status: "fail" });
     }
 

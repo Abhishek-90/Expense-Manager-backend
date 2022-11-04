@@ -40,13 +40,23 @@ export const signup = async (req: express.Request, res: express.Response) => {
       })
       .then()
       .catch((e) => console.log(e));
+    console.log("Response\n"+response);
 
     //Generating auth token to be sent to user.
     const authToken = jsonwebtoken.sign(
       { email: req.body.email },
       V.encryptionKey
     );
-    return res.status(status.CREATED).json({ authToken });
+
+    res.cookie("authToken",authToken, {
+      path: "/",
+      httpOnly: true,
+      sameSite: 'none',
+      maxAge: new Date().getTime() + 365 * 24 * 60 * 60,
+      secure: true
+    });
+    
+    res.sendStatus(status.CREATED);
   } catch (e) {
     return res.status(status.BADREQUEST).json({ error: e });
   }

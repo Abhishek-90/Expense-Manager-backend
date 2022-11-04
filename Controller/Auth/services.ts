@@ -104,12 +104,26 @@ export const logout = (req: express.Request, res: express.Response) => {
   res.sendStatus(status.OK);
 };
 
-export const autoLogin = (req: express.Request, res: express.Response) => {
+export const autoLogin = async (req: express.Request, res: express.Response) => {
   const cookie = req.headers.cookie;
   const cookiesObject = F.customCookieParser(cookie);
-  if(cookiesObject["authToken"]) {
-    res.sendStatus(status.OK);
-  } else {
-    res.sendStatus(status.UNAUTHORIZED);
+
+  try {
+    if(cookiesObject["authToken"] === null || cookiesObject["authToken"]?.trim().length === 0) {
+      return res.sendStatus(status.UNAUTHORIZED);
+    }
+  
+    const result:any = jsonwebtoken.verify(cookiesObject["authToken"], V.encryptionKey);
+    const response = await user.findOne({
+      email: result["email"],
+    });
+    
+    if(response === null) {
+      return res.sendStatus(status.UNAUTHORIZED);
+    }
+  
+    return res.sendStatus(status.OK);
+  } catch (error) {
+    res.status(status.BADREQUEST).json({error});
   }
 };

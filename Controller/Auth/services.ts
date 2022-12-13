@@ -40,7 +40,6 @@ export const signup = async (req: express.Request, res: express.Response) => {
       })
       .then()
       .catch((e) => console.log(e));
-    console.log("Response\n"+response);
 
     //Generating auth token to be sent to user.
     const authToken = jsonwebtoken.sign(
@@ -48,14 +47,14 @@ export const signup = async (req: express.Request, res: express.Response) => {
       V.encryptionKey
     );
 
-    res.cookie("authToken",authToken, {
+    res.cookie("authToken", authToken, {
       path: "/",
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: "none",
       maxAge: new Date().getTime() + 365 * 24 * 60 * 60,
-      secure: true
+      secure: true,
     });
-    
+
     res.sendStatus(status.CREATED);
   } catch (e) {
     return res.status(status.BADREQUEST).json({ error: e });
@@ -90,12 +89,12 @@ export const login = async (req: express.Request, res: express.Response) => {
       { email: req.body.email },
       V.encryptionKey
     );
-    res.cookie("authToken",authToken, {
+    res.cookie("authToken", authToken, {
       path: "/",
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: "none",
       maxAge: new Date().getTime() + 365 * 24 * 60 * 60,
-      secure: true
+      secure: true,
     });
     return res.json({ authToken: authToken }).status(status.OK);
   } else {
@@ -107,33 +106,42 @@ export const logout = (req: express.Request, res: express.Response) => {
   res.clearCookie("authToken", {
     path: "/",
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: "none",
     maxAge: new Date().getTime() + 365 * 24 * 60 * 60,
-    secure: true
+    secure: true,
   });
   res.sendStatus(status.OK);
 };
 
-export const autoLogin = async (req: express.Request, res: express.Response) => {
+export const autoLogin = async (
+  req: express.Request,
+  res: express.Response
+) => {
   const cookie = req.headers.cookie;
   const cookiesObject = F.customCookieParser(cookie);
 
   try {
-    if(cookiesObject["authToken"] === null || cookiesObject["authToken"]?.trim().length === 0) {
+    if (
+      cookiesObject["authToken"] === null ||
+      cookiesObject["authToken"]?.trim().length === 0
+    ) {
       return res.sendStatus(status.UNAUTHORIZED);
     }
-  
-    const result:any = jsonwebtoken.verify(cookiesObject["authToken"], V.encryptionKey);
+
+    const result: any = jsonwebtoken.verify(
+      cookiesObject["authToken"],
+      V.encryptionKey
+    );
     const response = await user.findOne({
       email: result["email"],
     });
-    
-    if(response === null) {
+
+    if (response === null) {
       return res.sendStatus(status.UNAUTHORIZED);
     }
-  
+
     return res.sendStatus(status.OK);
   } catch (error) {
-    res.status(status.BADREQUEST).json({error});
+    res.status(status.BADREQUEST).json({ error });
   }
 };

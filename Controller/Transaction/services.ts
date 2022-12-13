@@ -15,7 +15,6 @@ export const addTransaction = async (
       description: req.body.description,
       tag: req.body.tag,
     });
-    console.log(response);
     return res.status(status.OK).json({
       success: "success",
       Message: "Transaction Added Successfully",

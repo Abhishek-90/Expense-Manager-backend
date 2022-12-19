@@ -1,6 +1,7 @@
 import transaction from "../../models/transactionModel";
 import { response, request } from "express";
 import * as status from "../../Shared/Constants/Status";
+import transactionModel from "../../models/transactionModel";
 
 export const addTransaction = async (
   req: typeof request,
@@ -74,9 +75,12 @@ export const updateTransactionDetails = async (
         tag: req.body.tag,
       });
 
+      const response = await transaction.findById(req.body.id);
+
       return res.status(status.OK).json({
         success: "success",
         Message: "Transaction updated Successfully",
+        transaction: response,
       });
     } else {
       return res

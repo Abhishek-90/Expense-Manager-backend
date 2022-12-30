@@ -74,16 +74,19 @@ export const login = async (req: express.Request, res: express.Response) => {
     email: req.body.email,
   });
 
-  if (response === null)
+  if (response === null) {
+    // Checking if a user with given credentials exists.
     return res
       .status(status.BADREQUEST)
       .json({ Message: "Invalid Credentials" });
+  }
 
   const passwordValidation: boolean = await bcrypt.compare(
     req.body.password,
     response.password
   );
 
+  // If password authentication results in a positive result, we proceed further with allowing user to login.
   if (passwordValidation) {
     const authToken = jsonwebtoken.sign(
       { email: req.body.email },
@@ -98,6 +101,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     });
     return res.json({ authToken: authToken }).status(status.OK);
   } else {
+    // Password verification failed.
     return res.status(status.NOTFOUND).json({ Message: "Invalid Credentials" });
   }
 };

@@ -15,4 +15,7 @@ router.delete("/remove", fetchUser, service.removeTransaction);
 //ROUTE 4: API Enpoint to Update transaction information of the user. Login Required.
 router.put("/update", fetchUser, service.updateTransactionDetails);
 
+//ROUTE 5: API Enpoint to GET transaction details for Visualization. Login Required.
+router.get("/getVisualData", fetchUser, service.getVisualData);
+
 export { router };

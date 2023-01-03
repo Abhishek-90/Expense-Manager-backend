@@ -1,7 +1,7 @@
 import transaction from "../../models/transactionModel";
 import { response, request } from "express";
 import * as status from "../../Shared/Constants/Status";
-import transactionModel from "../../models/transactionModel";
+import * as TC from "../../Shared/Constants/TransactionConstants";
 
 export const addTransaction = async (
   req: typeof request,
@@ -89,5 +89,59 @@ export const updateTransactionDetails = async (
     }
   } catch (error) {
     return res.status(status.BADREQUEST).json({ error });
+  }
+};
+
+export const getVisualData = async (
+  req: typeof request,
+  res: typeof response
+) => {
+  try {
+    const userEmail = req.body.email;
+    if (userEmail !== null) {
+      const databaseResponse: typeof transaction[] = await transaction.find({
+        email: userEmail,
+        type: TC.EXPENSE,
+      });
+
+      let expenseData = [0, 0, 0, 0, 0, 0, 0];
+
+      if (
+        databaseResponse === null ||
+        databaseResponse === undefined ||
+        databaseResponse.length === 0
+      ) {
+        return res.status(status.OK).json({ DataPresent: false });
+      }
+
+      databaseResponse.forEach((data: any) => {
+        if (data.tag === TC.FOOD) {
+          expenseData[0] += data.amount;
+        } else if (data.tag === TC.CLOTHING) {
+          expenseData[1] += data.amount;
+        } else if (data.tag === TC.LUXURY) {
+          expenseData[2] += data.amount;
+        } else if (data.tag === TC.ENTERTAINMENT) {
+          expenseData[3] += data.amount;
+        } else if (data.tag === TC.TRAVEL) {
+          expenseData[4] += data.amount;
+        } else if (data.tag === TC.MEDICAL) {
+          expenseData[5] += data.amount;
+        } else if (data.tag === TC.INVESTMENT) {
+          expenseData[6] += data.amount;
+        }
+      });
+
+      res.status(status.OK);
+      res.json({ data: expenseData });
+      res.end();
+      return res;
+    } else {
+      res.status(status.UNAUTHORIZED).json({
+        Message: "Login Required",
+      });
+    }
+  } catch (error) {
+    return res.status(status.BADREQUEST).json(error);
   }
 };
